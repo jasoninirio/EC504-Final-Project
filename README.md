@@ -20,3 +20,14 @@
     <a href="https://github.com/jasoninirio/EC504-Final-Project/issues">Report Bug</a>
   </p>
 </p>
+
+### Tools and Dependencies
+[Overpass API](https://python-overpy.readthedocs.io/en/latest/index.html)
+[Yelp-Python](https://github.com/Yelp/yelp-python)
+
+### Resources
+[Updating SSl Certificate with Request Library](https://community.esri.com/t5/python-questions/solving-ssl-errors-in-python-requests/td-p/1124005)
+[Loading OSM API](https://towardsdatascience.com/loading-data-from-openstreetmap-with-python-and-the-overpass-api-513882a27fd0)
+[Finding Pizza Places in Boston](https://blog.jovian.ai/finding-pizza-places-in-massachusetts-using-osm-rest-api-and-web-scrapping-techniques-d14ad8f19b09)
+[Converting XML to JSON](https://www.hellocodeclub.com/how-to-convert-xml-to-json-in-python-ultimate-guide/)
+[Key-Values for OSM Amenities](https://taginfo.openstreetmap.org/keys/amenity#values)
