@@ -3,6 +3,20 @@
 [![GitHub license](https://img.shields.io/github/license/jasoninirio/EC504-Final-Project?style=plastic)](https://github.com/jasoninirio/EC504-Final-Project/blob/main/LICENSE)
 ![GitHub contributors](https://img.shields.io/github/contributors-anon/jasoninirio/EC504-Final-Project?style=plastic)
 
-# Where is the closest coffee shop?
-### Jason Inirio, Dasha Veraksa
-We propose to create a route recommendation application (based on Project 7) that will use the OpenStreetMap API to determine the shortest route between the user’s current location (expressed in longitude, latitude format) and the nearest coffee shop or library to them. The purpose of this is to create a useful tool for students looking to find the quickest way to get to a study space close to them. The application will use the input coordinates to find the closest street to the user, and generate output coordinates based on the coffee shop filter that exists in OpenStreetMap. It will find the shortest physically possible route that a vehicle could take between the two by following the streets. We propose to test 3 shortest-path algorithms – Dijkstra and Bellman-Ford with a queue, as well as Floyd-Warshall. The total route distance in feet will be displayed, as well as the actual path itself on a map visualization. The frontend will consist of different traveling options provided by OpenStreetMap and coffee shop reviews provided by Yelp. The frontend would also consist of a visual to both endpoints, displaying the route to the location selected and its total distance as calculated by the 3 different algorithms. OpenStreetMaps provides a builtin visual that can be called and displayed using Python. We are also considering using the Kivy python library to build the app entirely since it allows for quick deployment and Python capabilities. Our end goal is to provide a clean UI that would show an interactive map provided by OpenStreetMaps to select desired coffee shop or library, the shortest route between two endpoints (your location versus desired coffee shop or library), and a favorites list (optional) to make our project unique if there is extra time.
+<br />
+<p align="center">
+  <a href="https://github.com/jasoninirio/EC504-Final-Project">
+    <img src="images/logo_120_120.png" alt="Logo" width="120" height="120">
+  </a>
+
+  <h3 align="center">Study Spot</h3>
+
+  <p align="center">
+    An app for EC504 built using OpenStreetMap API to find the nearest study spot!
+    <br />
+    <a href="https://github.com/jasoninirio/EC504-Final-Project"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/jasoninirio/EC504-Final-Project/issues">Report Bug</a>
+  </p>
+</p>
