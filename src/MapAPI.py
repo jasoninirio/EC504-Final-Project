@@ -17,3 +17,5 @@ data_string = f"area[name={AREA}]->.a;(node(area.a)[amenity={AMENITY}];way(area.
 res = requests.get(query_url, params={'data': data_string})
 obj = xmltodict.parse(res.content)
 print(json.dumps(obj))
+
+# TODO order every amenity around the area via pandas dataframe

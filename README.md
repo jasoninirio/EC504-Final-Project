@@ -24,6 +24,7 @@
 ### Tools and Dependencies
 [Overpass API](https://python-overpy.readthedocs.io/en/latest/index.html)
 [Yelp-Python](https://github.com/Yelp/yelp-python)
+[PyInquirer](https://github.com/CITGuru/PyInquirer)
 
 ### Resources
 [Updating SSl Certificate with Request Library](https://community.esri.com/t5/python-questions/solving-ssl-errors-in-python-requests/td-p/1124005)
@@ -31,3 +32,4 @@
 [Finding Pizza Places in Boston](https://blog.jovian.ai/finding-pizza-places-in-massachusetts-using-osm-rest-api-and-web-scrapping-techniques-d14ad8f19b09)
 [Converting XML to JSON](https://www.hellocodeclub.com/how-to-convert-xml-to-json-in-python-ultimate-guide/)
 [Key-Values for OSM Amenities](https://taginfo.openstreetmap.org/keys/amenity#values)
+[Commandline UI](https://codeburst.io/building-beautiful-command-line-interfaces-with-python-26c7e1bb54df)
