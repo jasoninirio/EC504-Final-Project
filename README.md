@@ -22,13 +22,9 @@
 </p>
 <br/>
 
-### Getting Started
-Activate the python virtual environment  
-`source bin/activate` for Linux/MacOS  
-`.\studyspot\Scripts\activate ` for Windows  
-  
+### Getting Started  
 Install neccessary packages  
-`pip install -r requirements.txt`
+`pip install -r requirements.txt`  
 
 ### Tools and Dependencies
 [Overpass API](https://python-overpy.readthedocs.io/en/latest/index.html)  
