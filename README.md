@@ -12,7 +12,7 @@
   <h3 align="center">Study Spot</h3>
 
   <p align="center">
-    An app for EC504 built using OpenStreetMap API to find the nearest study spot!
+    A commandline tool built using OpenStreetMap API to find the nearest study spot!
     <br />
     <a href="https://github.com/jasoninirio/EC504-Final-Project"><strong>Explore the docs »</strong></a>
     <br />
@@ -20,6 +20,15 @@
     <a href="https://github.com/jasoninirio/EC504-Final-Project/issues">Report Bug</a>
   </p>
 </p>
+<br/>
+
+### Getting Started
+Activate the python virtual environment  
+`source bin/activate` for Linux/MacOS  
+`.\studyspot\Scripts\activate ` for Windows  
+  
+Install neccessary packages  
+`pip install -r requirements.txt`
 
 ### Tools and Dependencies
 [Overpass API](https://python-overpy.readthedocs.io/en/latest/index.html)

@@ -1,7 +1,6 @@
 # StudySpot by Jason Inirio and Dasha Veraksa
 # EC504 Final Project
 
-from logging.handlers import MemoryHandler
 import os, sys
 from PyInquirer import style_from_dict, Token, prompt, Separator
 from pprint import pprint
