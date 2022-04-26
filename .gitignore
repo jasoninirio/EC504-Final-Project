@@ -1,6 +1,9 @@
 # Ignore any python venv files
 Include/*
+include/*
+bin/*
 Lib/*
+lib/*
 Scripts/*
 *.cfg
 *.env
