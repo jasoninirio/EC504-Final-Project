@@ -38,3 +38,4 @@ Install neccessary packages
 [Converting XML to JSON](https://www.hellocodeclub.com/how-to-convert-xml-to-json-in-python-ultimate-guide/)  
 [Key-Values for OSM Amenities](https://taginfo.openstreetmap.org/keys/amenity#values)  
 [Commandline UI](https://codeburst.io/building-beautiful-command-line-interfaces-with-python-26c7e1bb54df)  
+[Using Requests Library for Yelp-API](https://www.justintodata.com/python-api-call-to-request-data/)
