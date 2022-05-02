@@ -7,3 +7,4 @@ lib/*
 Scripts/*
 *.cfg
 *.env
+*.csv

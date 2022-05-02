@@ -30,6 +30,7 @@ Install neccessary packages
 [Overpass API](https://python-overpy.readthedocs.io/en/latest/index.html)  
 [Yelp-Python](https://github.com/Yelp/yelp-python)  
 [PyInquirer](https://github.com/CITGuru/PyInquirer)  
+[NetworkX Library](https://networkx.org/documentation/stable/tutorial.html)  
 
 ### Resources
 [Updating SSl Certificate with Request Library](https://community.esri.com/t5/python-questions/solving-ssl-errors-in-python-requests/td-p/1124005)  
@@ -39,3 +40,5 @@ Install neccessary packages
 [Key-Values for OSM Amenities](https://taginfo.openstreetmap.org/keys/amenity#values)  
 [Commandline UI](https://codeburst.io/building-beautiful-command-line-interfaces-with-python-26c7e1bb54df)  
 [Using Requests Library for Yelp-API](https://www.justintodata.com/python-api-call-to-request-data/)
+[Graphing Nodes from OSM](https://taylor.callsen.me/loading-openstreetmap-data-into-a-graph-database/)
+[Get Nodes from an OSM polygon](https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL#By_polygon_.28poly.29)
