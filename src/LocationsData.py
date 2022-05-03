@@ -115,6 +115,7 @@ class LocationsData():
             radius = max(self.method_data[key], radius) # gets max radius
 
         # For local area
+        # BUG Latitude and Longitude taken from the "area" is not exactly in the area. i.e. we get nodes / ways in Australia when we put Boston
         data = json.loads(self.findNodes(None, allNodes=True, radius=radius))
         for d in tqdm(data['osm']['node']):
             node = {
@@ -130,12 +131,14 @@ class LocationsData():
             df.to_csv(f"LocationsDataOutput_{key}.csv")
         
     def callYelp(self):
+        # Simple API call, similar to the way in MapAPI
         pass
 
 
     def assignHeapVal(self):
         # call yelp API to assign heap value
         # assign values based on the equation:  ({num_of_reviews} / {average_star_review}) / {distance_to_location}
+        # NOTE is this worth it?
         pass
 
 
