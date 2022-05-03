@@ -42,3 +42,4 @@ Install neccessary packages
 [Using Requests Library for Yelp-API](https://www.justintodata.com/python-api-call-to-request-data/)
 [Graphing Nodes from OSM](https://taylor.callsen.me/loading-openstreetmap-data-into-a-graph-database/)
 [Get Nodes from an OSM polygon](https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL#By_polygon_.28poly.29)
+[Acquiring OSM data onto graph](https://levelup.gitconnected.com/working-with-openstreetmap-in-python-c49396d98ad4)

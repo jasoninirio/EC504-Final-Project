@@ -69,9 +69,6 @@ def cmd_ui():
                 {
                     'name': 'Walking',
                     'checked': True
-                },
-                {
-                    'name': 'Public transportation'
                 }
             ],
         }

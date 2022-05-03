@@ -10,10 +10,14 @@ import json
 import networkx as nx
 from MapAPI import QueryData as qd
 import sys
+import osmnx as ox
+import folium
+from tqdm import tqdm
 
 class Graph:
-    def __init__(self):
+    def __init__(self, Graph):
         print("Creating Graph Class")
+        self.G = Graph
     
     # for testing purposes
     def createGraph(self):
@@ -32,6 +36,10 @@ class Graph:
         # self.G.add_edge(2,5,weight=4)
         # self.G.add_edge(3,5,weight=14)
         # self.G.add_edge(2,3,weight=7)
+    
+    def findNearestNode(self, lat, lon):
+        # return ox.distance.nearest_nodes(self.G, lat, lon)
+        return ox.get_nearest_node(self.G, (lat, lon))
 
     def Dijkstra(self,source,target):
         # source, target are IDs referring to nodes in the graph 
@@ -53,7 +61,8 @@ class Graph:
 
             neighbors = list(self.G.adj[currmin])
             for neighbor in neighbors:
-                val = dist[currmin] + self.G[currmin][neighbor]['weight']
+                # print(f"TEST:{self.G[currmin][neighbor]}")
+                val = dist[currmin] + self.G[currmin][neighbor][0]['length']
                 if val < dist[neighbor]:
                     dist[neighbor] = val
                     pred[neighbor] = currmin
@@ -68,7 +77,7 @@ class Graph:
         path.append(source)
         mindist = 0
         for i in range(len(path)-1):
-            mindist += self.G[path[i]][path[i+1]]['weight']
+            mindist += self.G[path[i]][path[i+1]][0]['length']
 
         return path, mindist
 

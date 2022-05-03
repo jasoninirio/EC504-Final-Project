@@ -45,15 +45,14 @@ class QueryData:
         # self.client = Client(os.environ.get("YELP_API_KEY"))
         print("Gathering Information...")
     
-    def callYelp(self, lon, lat, name):
+    def callYelp(self, lon, lat, name, radius):
         headers = {'Authorization': 'Bearer {}'.format(self.YELP_API_KEY)}
-        yelp_api_url = "https://api.yelp.com/v3/businesses/search" # TODO change to self.yelp_url
         params = {
             'latitude':lat,
             'longitude':lon,
         }
         print(f"On Location {name}")
-        res = requests.get(yelp_api_url, headers=headers, params=params)
+        res = requests.get(self.yelp_url, headers=headers, params=params)
         return res.content
     
     def findNearAmenities(self, amenity):
