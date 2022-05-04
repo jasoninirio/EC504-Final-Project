@@ -40,7 +40,7 @@ class LocationsData():
     # urls and keys
     # overpass_url = "http://overpass-api.de/api/interpreter"
     yelp_url = "https://api.yelp.com/v3/businesses/search"
-    YELP_API_KEY = os.environ.get("YELP_API_KEY")
+    YELP_API_KEY = 'WNgMAbFZaTpl301U15VWKbezoCefoxQhvG3tNEJhcNWL6j8Bf2POdJb6BWxNs58ULttWeWiwjunPJ3ctIMDcWaiv4WiqTXNBJUPTkDu5HeWhrEg1pAw7gCnIcNdxYnYx'
 
     # constants
     MAX_VALUE = 10000
@@ -180,14 +180,14 @@ class LocationsData():
         self.StudySpotGraph = ox.graph.graph_from_bbox(self.bbox[0], self.bbox[1], self.bbox[2], self.bbox[3], truncate_by_edge=True, network_type=self.method)
 
     def planRoute(self, path, name):
-        ox.plot.plot_graph_route(self.StudySpotGraph, path, route_color='r')
+        #ox.plot.plot_graph_route(self.StudySpotGraph, path, route_color='r')
         map = ox.plot_route_folium(self.StudySpotGraph, path, weight=10)
         filepath = "Routes/"
         if not os.path.exists(filepath):
             os.makedirs(filepath)
 
         map.save(f"{filepath}StudySpotRoute_{name}.html")
-        print("Generated html file!\nLook for filename StudySpotRoute.html!")
+        print(f"Generated html file!\nLook for filename StudySpotRoute_{name}.html in the Routes folder!")
 
 # Debugging
 if __name__ == '__main__':
