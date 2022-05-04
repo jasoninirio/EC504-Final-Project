@@ -118,7 +118,7 @@ def confirmationPrompt(target):
 def main():
     '''
     Main Program for StudySpot - EC504 Final Project
-    By Jason Inirio & Dasha Veraska
+    By Jason Inirio & Dasha Veraksa
 
     For more information and source code: https://github.com/jasoninirio/EC504-Final-Project
     '''
@@ -158,7 +158,7 @@ def main():
     # print out plot and html map for visualization
     ld.planRoute(path, targetNode['name'])
     print("\n\n")
-    print(f"= Here is your perfect study spot! =\n\n\t{targetNode['name']}\n\t{targetNode['address']}, {targetNode['city']} {targetNode['state']} {targetNode['zipcode']}")
+    print(f"= Here is your perfect study spot! It is {dist:.2f}m away. =\n\n\t{targetNode['name']}\n\t{targetNode['address']}, {targetNode['city']} {targetNode['state']} {targetNode['zipcode']}")
 
 if __name__ == '__main__':
     main()
