@@ -1,7 +1,6 @@
 # A graph library created from OSM nodes and ways
 # Edges - Ways
 # Vertices - Nodes
-from tkinter import S
 import numpy as np
 import pandas as pd
 import requests
@@ -37,8 +36,9 @@ class Graph:
         self.G.add_edge(2,3,weight=7)
     
     def findNearestNode(self, lat, lon):
-        # return ox.distance.nearest_nodes(self.G, lat, lon)
-        return ox.get_nearest_node(self.G, (lat, lon))
+        # print(len(ox.distance.nearest_nodes(self.G, lat, lon)))
+        return ox.distance.nearest_nodes(self.G, lon, lat)
+        # return ox.get_nearest_node(self.G, (lat, lon))
 
     def Dijkstra(self,source,target):
         # source, target are IDs referring to nodes in the graph 

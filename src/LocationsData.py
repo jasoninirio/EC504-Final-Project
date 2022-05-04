@@ -1,3 +1,4 @@
+from audioop import mul
 import overpy
 import pandas as pd
 import numpy as np
@@ -162,6 +163,7 @@ class LocationsData():
         # uses an equation for expanding the box to narrow space and time complexity (but could limit some traveling options)
         deltaLat = abs(self.location[0] - target['latitude'])
         deltaLong = abs(self.location[1] - target['longitude'])
+        multi = 4
 
         north = max(self.location[0], target['latitude'])
         south = min(self.location[0], target['latitude'])
@@ -170,29 +172,36 @@ class LocationsData():
 
         # set bbox to be from north, south, west, east by 2x the delta
         self.bbox = [
-            north + (2 * deltaLat),
-            south - (2 * deltaLat),
-            east + (2 * deltaLong),
-            west - (2 * deltaLong)
+            north + (multi * deltaLat),
+            south - (multi * deltaLat),
+            east + (multi * deltaLong),
+            west - (multi * deltaLong)
         ]
     
     def callOSM(self):
         # Calls the OSMnx API to create a graph bounded by the target and starting node's coordinates
         # Allows for an easier and quicker way of finding places!
         print("Creating OSMnx Graph Object!")
-        # self.StudySpotGraph = ox.graph.graph_from_bbox(self.bbox[0], self.bbox[1], self.bbox[2], self.bbox[3], network_type=self.method)
-        self.StudySpotGraph = ox.graph_from_place(self.area, network_type=self.method)
+        self.StudySpotGraph = ox.graph.graph_from_bbox(self.bbox[0], self.bbox[1], self.bbox[2], self.bbox[3], truncate_by_edge=True, network_type=self.method)
+        # self.StudySpotGraph = ox.graph_from_place(self.area, network_type=self.method)
+        # debug
+        # m1 = ox.plot_graph_folium(self.StudySpotGraph, popup_attribute="name", weight=2, color="#8b0000")
+        # filepath="boundingbox.html"
+        # m1.save(filepath)
+        ox.plot.plot_graph(self.StudySpotGraph)
 
-    def planRoute(self, path, name):
-        print(f"Finding best path to {name}...")
-        map = ox.plot_route_folium(self.StudySpotGraph, path, weight=10)
-        map.save("StudySpotRoute.html")
-        print("Generated file!\nLook for filename StudySpotRoute.html!")
+    def planRoute(self, path):
+        # map = ox.plot_route_folium(self.StudySpotGraph, path, weight=10)
+        # map.save("StudySpotRoute.html")
+        # print("Generated file!\nLook for filename StudySpotRoute.html!")
+        print(self.StudySpotGraph)
+        ox.plot.plot_graph_route(self.StudySpotGraph, path, route_color='r')
 
 # Debugging
 if __name__ == '__main__':
     ld = LocationsData('Boston', 'Cafe', 'Walking', "8 St Mary's St, Boston, MA 02215")
     testnode = ld.findLocalAmenity()
+
     print("Test Node")
     if testnode != None:
         for keys in testnode.keys():
@@ -206,7 +215,7 @@ if __name__ == '__main__':
 
     print(f"Source:\t{source}\nTarget:\t{target}")
 
-    path, dist = testGraph.Dijkstra(source, target)
-    print(f"Path:\n{path}\nDistance:\t{dist}")
+    path = testGraph.Dijkstra(source, target)
+    print(f"Path:\n{path}")
 
     ld.planRoute(path, testnode['name'])

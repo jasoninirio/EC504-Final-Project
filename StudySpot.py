@@ -150,13 +150,13 @@ def main():
     target = studyGraph.findNearestNode(targetNode['latitude'], targetNode['longitude'])
     source = studyGraph.findNearestNode(ld.location[0], ld.location[1])
 
-    print(target)
     print(source)
+    print(target)
     path = studyGraph.Dijkstra(source, target)
 
     # print out html map for visualization
     print(path)
-    ld.planRoute(path, targetNode['name'])
+    ld.planRoute(path)
 
 if __name__ == '__main__':
     main()
