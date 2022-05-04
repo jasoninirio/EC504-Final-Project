@@ -4,6 +4,7 @@ include/*
 bin/*
 Lib/*
 lib/*
+lib64/*
 Scripts/*
 *.cfg
 *.env

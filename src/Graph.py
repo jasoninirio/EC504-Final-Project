@@ -3,13 +3,9 @@
 # Vertices - Nodes
 import numpy as np
 import pandas as pd
-import requests
-import xmltodict
-import json
 import networkx as nx
 import sys
 import osmnx as ox
-import folium
 from tqdm import tqdm
 
 class Graph:

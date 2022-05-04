@@ -1,16 +1,12 @@
-import overpy
 import pandas as pd
 import numpy as np
 import requests
 import json
 import os
 from dotenv import load_dotenv
-import heapq
-import pprint
 from yelp.client import Client
 from tqdm import tqdm
 import osmnx as ox
-import folium
 import networkx as nx
 from src.Graph import Graph
 from geopy.geocoders import Nominatim
@@ -180,7 +176,7 @@ class LocationsData():
         self.StudySpotGraph = ox.graph.graph_from_bbox(self.bbox[0], self.bbox[1], self.bbox[2], self.bbox[3], truncate_by_edge=True, network_type=self.method)
 
     def planRoute(self, path, name):
-        ox.plot.plot_graph_route(self.StudySpotGraph, path, route_color='r')
+        # ox.plot.plot_graph_route(self.StudySpotGraph, path, route_color='r') # for plotting
         map = ox.plot_route_folium(self.StudySpotGraph, path, weight=10)
         filepath = "Routes/"
         if not os.path.exists(filepath):

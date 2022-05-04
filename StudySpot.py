@@ -1,11 +1,9 @@
 # StudySpot by Jason Inirio and Dasha Veraksa
 # EC504 Final Project
 
-from math import dist
 import os, sys
 from PyInquirer import style_from_dict, Token, prompt, Separator
 from pprint import pprint
-import keyboard
 from src.LocationsData import LocationsData
 from src.Graph import Graph
 
