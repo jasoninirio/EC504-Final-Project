@@ -40,8 +40,7 @@ class LocationsData():
     # urls and keys
     # overpass_url = "http://overpass-api.de/api/interpreter"
     yelp_url = "https://api.yelp.com/v3/businesses/search"
-    YELP_API_KEY = 'WNgMAbFZaTpl301U15VWKbezoCefoxQhvG3tNEJhcNWL6j8Bf2POdJb6BWxNs58ULttWeWiwjunPJ3ctIMDcWaiv4WiqTXNBJUPTkDu5HeWhrEg1pAw7gCnIcNdxYnYx'
-
+    YELP_API_KEY = os.environ.get("YELP_API_KEY")
     # constants
     MAX_VALUE = 10000
 
