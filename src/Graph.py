@@ -74,13 +74,13 @@ class Graph:
             path.append(node)
             node = pred[node]
         path.append(source)
-        # mindist = 0
-        # for i in range(len(path)-1):
-        #     mindist += self.G[path[i]][path[i+1]][0]['length']
+        path.reverse()
+        mindist = 0
+        for i in range(len(path)-1):
+            mindist += self.G[path[i]][path[i+1]][0]['length']
             # mindist += self.G[path[i]][path[i+1]]['length']
 
-        # return path, mindist
-        return path
+        return path, mindist
 
 
 if __name__ == '__main__':

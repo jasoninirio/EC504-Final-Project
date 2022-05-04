@@ -1,10 +1,8 @@
-from audioop import mul
 import overpy
 import pandas as pd
 import numpy as np
 import requests
 import json
-import xmltodict
 import os
 from dotenv import load_dotenv
 import heapq
@@ -122,9 +120,6 @@ class LocationsData():
         
         res = requests.get(self.yelp_url, headers=headers, params=params)
         data = json.loads(res.content)
-        # print("Local Amenities")
-        # print(res.content)
-        # print(data)
 
         # query through nearby business from yelp API
         index = 0
@@ -163,7 +158,7 @@ class LocationsData():
         # uses an equation for expanding the box to narrow space and time complexity (but could limit some traveling options)
         deltaLat = abs(self.location[0] - target['latitude'])
         deltaLong = abs(self.location[1] - target['longitude'])
-        multi = 4
+        multi = 1
 
         north = max(self.location[0], target['latitude'])
         south = min(self.location[0], target['latitude'])
@@ -183,19 +178,16 @@ class LocationsData():
         # Allows for an easier and quicker way of finding places!
         print("Creating OSMnx Graph Object!")
         self.StudySpotGraph = ox.graph.graph_from_bbox(self.bbox[0], self.bbox[1], self.bbox[2], self.bbox[3], truncate_by_edge=True, network_type=self.method)
-        # self.StudySpotGraph = ox.graph_from_place(self.area, network_type=self.method)
-        # debug
-        # m1 = ox.plot_graph_folium(self.StudySpotGraph, popup_attribute="name", weight=2, color="#8b0000")
-        # filepath="boundingbox.html"
-        # m1.save(filepath)
-        ox.plot.plot_graph(self.StudySpotGraph)
 
-    def planRoute(self, path):
-        # map = ox.plot_route_folium(self.StudySpotGraph, path, weight=10)
-        # map.save("StudySpotRoute.html")
-        # print("Generated file!\nLook for filename StudySpotRoute.html!")
-        print(self.StudySpotGraph)
+    def planRoute(self, path, name):
         ox.plot.plot_graph_route(self.StudySpotGraph, path, route_color='r')
+        map = ox.plot_route_folium(self.StudySpotGraph, path, weight=10)
+        filepath = "Routes/"
+        if not os.path.exists(filepath):
+            os.makedirs(filepath)
+
+        map.save(f"{filepath}StudySpotRoute_{name}.html")
+        print("Generated html file!\nLook for filename StudySpotRoute.html!")
 
 # Debugging
 if __name__ == '__main__':

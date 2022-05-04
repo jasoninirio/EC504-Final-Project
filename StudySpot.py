@@ -1,6 +1,7 @@
 # StudySpot by Jason Inirio and Dasha Veraksa
 # EC504 Final Project
 
+from math import dist
 import os, sys
 from PyInquirer import style_from_dict, Token, prompt, Separator
 from pprint import pprint
@@ -126,12 +127,13 @@ def main():
     # clearConsole()
     print("Thank you for your response!")
     # clearConsole()
-    print(answers)
+    print("\n")
+    # print(answers)
     print("Starting StudySpot...")
     ld = LocationsData(answers['city'], answers['amenity'], answers['method'], answers['location'])
     print("Found potential spots! Now narrowing it down by preferences...")
     targetNode = ld.findLocalAmenity()
-    # clearConsole()
+    print("\n")
     confirmation = confirmationPrompt(targetNode)
 
     while (not confirmation['isConfirmed']):
@@ -142,6 +144,7 @@ def main():
         confirmation = confirmationPrompt(targetNode)
     
     # after confirming, present information
+    print("\n")
     ld.createBBox(targetNode)
     ld.callOSM()
 
@@ -150,13 +153,12 @@ def main():
     target = studyGraph.findNearestNode(targetNode['latitude'], targetNode['longitude'])
     source = studyGraph.findNearestNode(ld.location[0], ld.location[1])
 
-    print(source)
-    print(target)
-    path = studyGraph.Dijkstra(source, target)
+    path, dist = studyGraph.Dijkstra(source, target)
 
-    # print out html map for visualization
-    print(path)
-    ld.planRoute(path)
+    # print out plot and html map for visualization
+    ld.planRoute(path, targetNode['name'])
+    print("\n\n")
+    print(f"= Here is your perfect study spot! =\n\n\t{targetNode['name']}\n\t{targetNode['address']}, {targetNode['city']} {targetNode['state']} {targetNode['zipcode']}")
 
 if __name__ == '__main__':
     main()
