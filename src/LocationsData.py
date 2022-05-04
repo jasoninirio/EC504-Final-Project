@@ -1,4 +1,3 @@
-from unittest import TestProgram
 import overpy
 import pandas as pd
 import numpy as np
@@ -14,7 +13,8 @@ from tqdm import tqdm
 import osmnx as ox
 import folium
 import networkx as nx
-from Graph import Graph
+from src.Graph import Graph
+from geopy.geocoders import Nominatim
 
 load_dotenv()
 
@@ -25,9 +25,8 @@ Find longtidude and latitude of location with the overpy api:
 New method of approaching the query search to find distance based on current location, and using a radius based on a dictionary
 of method of transportation:
     - Walking = 4825m
-    - Car = MAX_VALUE (40,000m)
+    - Car = MAX_VALUE (10,000m)
     - Bike = 12875m
-    - Public = MAX_VALUE (40,000m)
     NOTE For Yelp-API: "The max value is 40000 meters (about 25 miles)."
 
 Produce a max-min heap based on the equation: 
@@ -60,46 +59,84 @@ class LocationsData():
         'drive': 0,
     }
 
+    rejected = []
+
     def __init__(self, area, amenity, method, location=(42.3492, -71.1060)):
         # assign values to each class variable
         self.area = area
         self.amenities = amenity
-        self.method = method
-        self.location = location
+
+        # convert method to match OSMnx
+        _method = ""
+        if method == 'Car': _method = 'drive'
+        if method == 'Bike': _method = 'bike'
+        if method == 'Walking': _method = 'walk'
+
+        self.method = _method
+
+        # finding location based on latitude, longitude with geopy
+        locator = Nominatim(user_agent="StudySpot")
+        geolocation = locator.geocode(location)
+
+        self.location = (geolocation.latitude, geolocation.longitude)
 
         # create key-value pair for each method of transportation
         self.method_data['walk'] = 4500
         self.method_data['bike'] = 5000
         self.method_data['car'] = self.MAX_VALUE
 
-        print(f"Gathering nearby study spots based in {area}")
+        print(f"Gathering nearby study spots all around {area}!")
     
-    def findLocalAmenity(self):
-        # find max radius for yelp api
+    def findLocalAmenity(self, rejectedNode=None):
+        # find best local amenity with yelp API
+        if rejectedNode != None:
+            self.rejected.append(rejectedNode['address']) # keep track of rejected nodes
+
         # gets max radius
         radius = self.method_data[self.method]
         
-        print(f"Radius is: {radius}")
+        # print(f"Radius is: {radius}")
 
         headers = {'Authorization': 'Bearer {}'.format(self.YELP_API_KEY)}
-        params = {
-            'latitude': self.location[0],
-            'longitude': self.location[1],
-            'radius': radius,
-            'categories': 'coffee, internetcafe, cafes'
-        }
+        
+        # finding amenities based on search
+        if self.amenities == 'Cafe':
+            params = {
+                'latitude': self.location[0],
+                'longitude': self.location[1],
+                'radius': radius,
+                'categories': 'coffee, internetcafe, cafes'
+            }
+        
+        elif self.amenities == 'Library':
+            params = {
+                'latitude': self.location[0],
+                'longitude': self.location[1],
+                'radius': radius,
+                'categories': 'libraries'
+            }
+        
+        else:
+            params=None
+        
         res = requests.get(self.yelp_url, headers=headers, params=params)
         data = json.loads(res.content)
         # print("Local Amenities")
         # print(res.content)
+        # print(data)
 
+        # query through nearby business from yelp API
         index = 0
-        maxValue = 0
+        maxValue = 0 
         currNode = None
-        for d in tqdm(data['businesses']):
+        prevNode = None
+        for d in data['businesses']:
             # using equation for finding best result: max{({review_count} / {rating}) / distance}
             val = ((d['review_count'] / d['rating']) / d['distance'])
             if val > maxValue:
+                if currNode != None:
+                    prevNode = currNode
+                
                 currNode = {
                     'latitude': d['coordinates']['latitude'],
                     'longitude': d['coordinates']['longitude'],
@@ -109,12 +146,15 @@ class LocationsData():
                     'city': d['location']['city'],
                     'state': d['location']['state']
                 }
+                if rejectedNode != None and currNode['address'] in self.rejected:
+                    currNode = prevNode
         
         # check if any nodes were found
         if currNode == None:
-            print("no amenities found - sorry :(")
+            print("no amenities were found - sorry :(")
             return None
         else:
+            print(f"Found {currNode['name']}!")
             return currNode
     
     def createBBox(self, target):
@@ -128,35 +168,30 @@ class LocationsData():
         east = max(self.location[1], target['longitude'])
         west = min(self.location[1], target['longitude'])
 
-        # set bbox to be from north, south, west, east
+        # set bbox to be from north, south, west, east by 2x the delta
         self.bbox = [
-            north + deltaLat,
-            south - deltaLat,
-            east + deltaLong,
-            west - deltaLong
+            north + (2 * deltaLat),
+            south - (2 * deltaLat),
+            east + (2 * deltaLong),
+            west - (2 * deltaLong)
         ]
     
     def callOSM(self):
         # Calls the OSMnx API to create a graph bounded by the target and starting node's coordinates
         # Allows for an easier and quicker way of finding places!
+        print("Creating OSMnx Graph Object!")
+        # self.StudySpotGraph = ox.graph.graph_from_bbox(self.bbox[0], self.bbox[1], self.bbox[2], self.bbox[3], network_type=self.method)
+        self.StudySpotGraph = ox.graph_from_place(self.area, network_type=self.method)
 
-        self.StudySpotGraph = ox.graph.graph_from_bbox(self.bbox[0], self.bbox[1], self.bbox[2], self.bbox[3], network_type=self.method)
-        # nodes, streets = ox.graph_to_gdfs(self.StudySpotGraph)
+    def planRoute(self, path, name):
+        print(f"Finding best path to {name}...")
+        map = ox.plot_route_folium(self.StudySpotGraph, path, weight=10)
+        map.save("StudySpotRoute.html")
+        print("Generated file!\nLook for filename StudySpotRoute.html!")
 
-        # print("streets")
-        # print(streets.head())
-        # print(streets.tail())
-
-        # print("nodes")
-        # print(nodes.head())
-        # print(nodes.tail())
-
-        # m1 = ox.plot_graph_folium(self.StudySpotGraph, popup_attribute="name", weight=2, color="#8b0000")
-        # filepath="studyspots.html"
-        # m1.save(filepath)
-
+# Debugging
 if __name__ == '__main__':
-    ld = LocationsData('Boston', ['cafe'], 'walk')
+    ld = LocationsData('Boston', 'Cafe', 'Walking', "8 St Mary's St, Boston, MA 02215")
     testnode = ld.findLocalAmenity()
     print("Test Node")
     if testnode != None:
@@ -173,3 +208,5 @@ if __name__ == '__main__':
 
     path, dist = testGraph.Dijkstra(source, target)
     print(f"Path:\n{path}\nDistance:\t{dist}")
+
+    ld.planRoute(path, testnode['name'])
